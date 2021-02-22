@@ -1,0 +1,464 @@
+﻿namespace WindowsApplication1
+{
+    partial class Form1
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows
+
+        /// <summary>
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.button1 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.COM = new System.Windows.Forms.Label();
+            this.button30 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.lbl_epc = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.bn_AddItem = new System.Windows.Forms.Button();
+            this.tb_desc = new System.Windows.Forms.TextBox();
+            this.lbl_desc = new System.Windows.Forms.Label();
+            this.tb_loc = new System.Windows.Forms.TextBox();
+            this.lbl_loc = new System.Windows.Forms.Label();
+            this.tb_name = new System.Windows.Forms.TextBox();
+            this.lbl_name = new System.Windows.Forms.Label();
+            this.tb_sn = new System.Windows.Forms.TextBox();
+            this.lbl_sn = new System.Windows.Forms.Label();
+            this.tb_epc = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(84, 50);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(50, 50);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Open";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.AutoCompleteCustomSource.AddRange(new string[] {
+            "COM1",
+            "COM2"});
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "COM1",
+            "COM2",
+            "COM3",
+            "COM4",
+            "COM5",
+            "COM6",
+            "COM7",
+            "COM8",
+            "COM9",
+            "COM10"});
+            this.comboBox1.Location = new System.Drawing.Point(47, 16);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(153, 21);
+            this.comboBox1.TabIndex = 1;
+            this.comboBox1.Tag = "";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(150, 50);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(50, 50);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Close";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(341, 154);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(83, 41);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "WriteTag";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(8, 23);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(83, 41);
+            this.button6.TabIndex = 0;
+            this.button6.Text = "Read Tag";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(111, 23);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(83, 41);
+            this.button11.TabIndex = 10;
+            this.button11.Text = "Stop Reading";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.COM);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.comboBox1);
+            this.groupBox3.Controls.Add(this.button30);
+            this.groupBox3.Location = new System.Drawing.Point(12, 7);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(219, 116);
+            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Connection";
+            // 
+            // COM
+            // 
+            this.COM.AutoSize = true;
+            this.COM.Location = new System.Drawing.Point(15, 21);
+            this.COM.Name = "COM";
+            this.COM.Size = new System.Drawing.Size(29, 13);
+            this.COM.TabIndex = 3;
+            this.COM.Text = "USB";
+            // 
+            // button30
+            // 
+            this.button30.Location = new System.Drawing.Point(18, 50);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(50, 50);
+            this.button30.TabIndex = 4;
+            this.button30.Text = "Scan USB";
+            this.button30.UseVisualStyleBackColor = true;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button11);
+            this.groupBox1.Controls.Add(this.button6);
+            this.groupBox1.Location = new System.Drawing.Point(12, 133);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 72);
+            this.groupBox1.TabIndex = 22;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "ActiveMode";
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(341, 7);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(83, 41);
+            this.button4.TabIndex = 24;
+            this.button4.Text = "ReadRFPower";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(341, 55);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(83, 41);
+            this.button5.TabIndex = 25;
+            this.button5.Text = "SetRFPower";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(251, 106);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(83, 41);
+            this.button8.TabIndex = 26;
+            this.button8.Text = "RelayOn";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(341, 106);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(83, 41);
+            this.button9.TabIndex = 27;
+            this.button9.Text = "RelayOff";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30"});
+            this.comboBox2.Location = new System.Drawing.Point(251, 11);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(69, 27);
+            this.comboBox2.TabIndex = 28;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // lbl_epc
+            // 
+            this.lbl_epc.AutoSize = true;
+            this.lbl_epc.Location = new System.Drawing.Point(40, 24);
+            this.lbl_epc.Name = "lbl_epc";
+            this.lbl_epc.Size = new System.Drawing.Size(31, 13);
+            this.lbl_epc.TabIndex = 30;
+            this.lbl_epc.Text = "EPC:";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.bn_AddItem);
+            this.groupBox4.Controls.Add(this.tb_desc);
+            this.groupBox4.Controls.Add(this.lbl_desc);
+            this.groupBox4.Controls.Add(this.tb_loc);
+            this.groupBox4.Controls.Add(this.lbl_loc);
+            this.groupBox4.Controls.Add(this.tb_name);
+            this.groupBox4.Controls.Add(this.lbl_name);
+            this.groupBox4.Controls.Add(this.tb_sn);
+            this.groupBox4.Controls.Add(this.lbl_sn);
+            this.groupBox4.Controls.Add(this.tb_epc);
+            this.groupBox4.Controls.Add(this.lbl_epc);
+            this.groupBox4.Location = new System.Drawing.Point(450, 7);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(313, 267);
+            this.groupBox4.TabIndex = 31;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Add Items to Database";
+            // 
+            // bn_AddItem
+            // 
+            this.bn_AddItem.Location = new System.Drawing.Point(73, 232);
+            this.bn_AddItem.Name = "bn_AddItem";
+            this.bn_AddItem.Size = new System.Drawing.Size(188, 23);
+            this.bn_AddItem.TabIndex = 40;
+            this.bn_AddItem.Text = "Add Item!";
+            this.bn_AddItem.UseVisualStyleBackColor = true;
+            this.bn_AddItem.Click += new System.EventHandler(this.bn_AddItem_Click);
+            // 
+            // tb_desc
+            // 
+            this.tb_desc.Location = new System.Drawing.Point(73, 126);
+            this.tb_desc.Multiline = true;
+            this.tb_desc.Name = "tb_desc";
+            this.tb_desc.Size = new System.Drawing.Size(188, 100);
+            this.tb_desc.TabIndex = 39;
+            // 
+            // lbl_desc
+            // 
+            this.lbl_desc.AutoSize = true;
+            this.lbl_desc.Location = new System.Drawing.Point(4, 129);
+            this.lbl_desc.Name = "lbl_desc";
+            this.lbl_desc.Size = new System.Drawing.Size(63, 13);
+            this.lbl_desc.TabIndex = 38;
+            this.lbl_desc.Text = "Description:";
+            // 
+            // tb_loc
+            // 
+            this.tb_loc.Location = new System.Drawing.Point(73, 100);
+            this.tb_loc.Name = "tb_loc";
+            this.tb_loc.Size = new System.Drawing.Size(188, 20);
+            this.tb_loc.TabIndex = 37;
+            // 
+            // lbl_loc
+            // 
+            this.lbl_loc.AutoSize = true;
+            this.lbl_loc.Location = new System.Drawing.Point(19, 103);
+            this.lbl_loc.Name = "lbl_loc";
+            this.lbl_loc.Size = new System.Drawing.Size(51, 13);
+            this.lbl_loc.TabIndex = 36;
+            this.lbl_loc.Text = "Location:";
+            // 
+            // tb_name
+            // 
+            this.tb_name.Location = new System.Drawing.Point(73, 74);
+            this.tb_name.Name = "tb_name";
+            this.tb_name.Size = new System.Drawing.Size(188, 20);
+            this.tb_name.TabIndex = 35;
+            // 
+            // lbl_name
+            // 
+            this.lbl_name.AutoSize = true;
+            this.lbl_name.Location = new System.Drawing.Point(10, 77);
+            this.lbl_name.Name = "lbl_name";
+            this.lbl_name.Size = new System.Drawing.Size(61, 13);
+            this.lbl_name.TabIndex = 34;
+            this.lbl_name.Text = "Item Name:";
+            // 
+            // tb_sn
+            // 
+            this.tb_sn.Location = new System.Drawing.Point(73, 47);
+            this.tb_sn.Name = "tb_sn";
+            this.tb_sn.Size = new System.Drawing.Size(188, 20);
+            this.tb_sn.TabIndex = 33;
+            // 
+            // lbl_sn
+            // 
+            this.lbl_sn.AutoSize = true;
+            this.lbl_sn.Location = new System.Drawing.Point(40, 50);
+            this.lbl_sn.Name = "lbl_sn";
+            this.lbl_sn.Size = new System.Drawing.Size(30, 13);
+            this.lbl_sn.TabIndex = 32;
+            this.lbl_sn.Text = "S/N:";
+            // 
+            // tb_epc
+            // 
+            this.tb_epc.Location = new System.Drawing.Point(73, 21);
+            this.tb_epc.Name = "tb_epc";
+            this.tb_epc.ReadOnly = true;
+            this.tb_epc.Size = new System.Drawing.Size(188, 20);
+            this.tb_epc.TabIndex = 31;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.textBox1);
+            this.groupBox5.Location = new System.Drawing.Point(12, 211);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(412, 95);
+            this.groupBox5.TabIndex = 32;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Console:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 19);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(400, 67);
+            this.textBox1.TabIndex = 33;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(775, 426);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox3);
+            this.Name = "Form1";
+            this.Text = "USB";
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label COM;
+        private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Button button30;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lbl_epc;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox tb_epc;
+        private System.Windows.Forms.TextBox tb_desc;
+        private System.Windows.Forms.Label lbl_desc;
+        private System.Windows.Forms.TextBox tb_loc;
+        private System.Windows.Forms.Label lbl_loc;
+        private System.Windows.Forms.TextBox tb_name;
+        private System.Windows.Forms.Label lbl_name;
+        private System.Windows.Forms.TextBox tb_sn;
+        private System.Windows.Forms.Label lbl_sn;
+        private System.Windows.Forms.Button bn_AddItem;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox textBox1;
+    }
+}
+
