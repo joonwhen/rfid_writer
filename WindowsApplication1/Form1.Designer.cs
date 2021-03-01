@@ -45,7 +45,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lbl_epc = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.bn_AddItem = new System.Windows.Forms.Button();
             this.tb_desc = new System.Windows.Forms.TextBox();
             this.lbl_desc = new System.Windows.Forms.Label();
             this.tb_loc = new System.Windows.Forms.TextBox();
@@ -57,17 +56,28 @@
             this.tb_epc = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.bn_CheckOut = new System.Windows.Forms.Button();
+            this.tb_CheckOutUser = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tb_epc_checkout = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tb_user_CheckIn = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.bn_ClearEntry = new System.Windows.Forms.Button();
+            this.bn_AddItem = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(84, 50);
+            this.button1.Location = new System.Drawing.Point(96, 50);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 50);
+            this.button1.Size = new System.Drawing.Size(60, 50);
             this.button1.TabIndex = 0;
             this.button1.Text = "Open";
             this.button1.UseVisualStyleBackColor = true;
@@ -93,15 +103,15 @@
             "COM10"});
             this.comboBox1.Location = new System.Drawing.Point(47, 16);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(153, 21);
+            this.comboBox1.Size = new System.Drawing.Size(190, 21);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.Tag = "";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(150, 50);
+            this.button2.Location = new System.Drawing.Point(177, 50);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 50);
+            this.button2.Size = new System.Drawing.Size(60, 50);
             this.button2.TabIndex = 2;
             this.button2.Text = "Close";
             this.button2.UseVisualStyleBackColor = true;
@@ -109,7 +119,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(341, 154);
+            this.button3.Location = new System.Drawing.Point(680, 28);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(83, 41);
             this.button3.TabIndex = 3;
@@ -119,9 +129,10 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(8, 23);
+            this.button6.Enabled = false;
+            this.button6.Location = new System.Drawing.Point(6, 25);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(83, 41);
+            this.button6.Size = new System.Drawing.Size(110, 41);
             this.button6.TabIndex = 0;
             this.button6.Text = "Read Tag";
             this.button6.UseVisualStyleBackColor = true;
@@ -129,9 +140,9 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(111, 23);
+            this.button11.Location = new System.Drawing.Point(132, 25);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(83, 41);
+            this.button11.Size = new System.Drawing.Size(110, 41);
             this.button11.TabIndex = 10;
             this.button11.Text = "Stop Reading";
             this.button11.UseVisualStyleBackColor = true;
@@ -146,7 +157,7 @@
             this.groupBox3.Controls.Add(this.button30);
             this.groupBox3.Location = new System.Drawing.Point(12, 7);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(219, 116);
+            this.groupBox3.Size = new System.Drawing.Size(248, 116);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Connection";
@@ -154,17 +165,17 @@
             // COM
             // 
             this.COM.AutoSize = true;
-            this.COM.Location = new System.Drawing.Point(15, 21);
+            this.COM.Location = new System.Drawing.Point(12, 19);
             this.COM.Name = "COM";
-            this.COM.Size = new System.Drawing.Size(29, 13);
+            this.COM.Size = new System.Drawing.Size(32, 13);
             this.COM.TabIndex = 3;
-            this.COM.Text = "USB";
+            this.COM.Text = "USB:";
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(18, 50);
+            this.button30.Location = new System.Drawing.Point(15, 50);
             this.button30.Name = "button30";
-            this.button30.Size = new System.Drawing.Size(50, 50);
+            this.button30.Size = new System.Drawing.Size(60, 50);
             this.button30.TabIndex = 4;
             this.button30.Text = "Scan USB";
             this.button30.UseVisualStyleBackColor = true;
@@ -176,14 +187,14 @@
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Location = new System.Drawing.Point(12, 133);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 72);
+            this.groupBox1.Size = new System.Drawing.Size(248, 72);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ActiveMode";
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(341, 7);
+            this.button4.Location = new System.Drawing.Point(652, 254);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(83, 41);
             this.button4.TabIndex = 24;
@@ -193,7 +204,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(341, 55);
+            this.button5.Location = new System.Drawing.Point(652, 230);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(83, 41);
             this.button5.TabIndex = 25;
@@ -203,7 +214,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(251, 106);
+            this.button8.Location = new System.Drawing.Point(602, 23);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(83, 41);
             this.button8.TabIndex = 26;
@@ -213,7 +224,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(341, 106);
+            this.button9.Location = new System.Drawing.Point(571, 23);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(83, 41);
             this.button9.TabIndex = 27;
@@ -258,7 +269,7 @@
             "28",
             "29",
             "30"});
-            this.comboBox2.Location = new System.Drawing.Point(251, 11);
+            this.comboBox2.Location = new System.Drawing.Point(555, 245);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(69, 27);
@@ -279,7 +290,10 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.bn_ClearEntry);
             this.groupBox4.Controls.Add(this.bn_AddItem);
+            this.groupBox4.Controls.Add(this.tb_user_CheckIn);
+            this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.tb_desc);
             this.groupBox4.Controls.Add(this.lbl_desc);
             this.groupBox4.Controls.Add(this.tb_loc);
@@ -290,22 +304,12 @@
             this.groupBox4.Controls.Add(this.lbl_sn);
             this.groupBox4.Controls.Add(this.tb_epc);
             this.groupBox4.Controls.Add(this.lbl_epc);
-            this.groupBox4.Location = new System.Drawing.Point(450, 7);
+            this.groupBox4.Location = new System.Drawing.Point(266, 7);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(313, 267);
+            this.groupBox4.Size = new System.Drawing.Size(270, 329);
             this.groupBox4.TabIndex = 31;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Add Items to Database";
-            // 
-            // bn_AddItem
-            // 
-            this.bn_AddItem.Location = new System.Drawing.Point(73, 232);
-            this.bn_AddItem.Name = "bn_AddItem";
-            this.bn_AddItem.Size = new System.Drawing.Size(188, 23);
-            this.bn_AddItem.TabIndex = 40;
-            this.bn_AddItem.Text = "Add Item!";
-            this.bn_AddItem.UseVisualStyleBackColor = true;
-            this.bn_AddItem.Click += new System.EventHandler(this.bn_AddItem_Click);
             // 
             // tb_desc
             // 
@@ -383,9 +387,9 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.textBox1);
-            this.groupBox5.Location = new System.Drawing.Point(12, 211);
+            this.groupBox5.Location = new System.Drawing.Point(12, 342);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(412, 95);
+            this.groupBox5.Size = new System.Drawing.Size(524, 82);
             this.groupBox5.TabIndex = 32;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Console:";
@@ -396,14 +400,108 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(400, 67);
+            this.textBox1.Size = new System.Drawing.Size(509, 57);
             this.textBox1.TabIndex = 33;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.bn_CheckOut);
+            this.groupBox2.Controls.Add(this.tb_CheckOutUser);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.tb_epc_checkout);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Location = new System.Drawing.Point(12, 220);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(248, 116);
+            this.groupBox2.TabIndex = 43;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Checkout Item from Database";
+            // 
+            // bn_CheckOut
+            // 
+            this.bn_CheckOut.Location = new System.Drawing.Point(49, 73);
+            this.bn_CheckOut.Name = "bn_CheckOut";
+            this.bn_CheckOut.Size = new System.Drawing.Size(188, 23);
+            this.bn_CheckOut.TabIndex = 41;
+            this.bn_CheckOut.Text = "Checkout!";
+            this.bn_CheckOut.UseVisualStyleBackColor = true;
+            this.bn_CheckOut.Click += new System.EventHandler(this.bn_CheckOut_Click);
+            // 
+            // tb_CheckOutUser
+            // 
+            this.tb_CheckOutUser.Location = new System.Drawing.Point(49, 47);
+            this.tb_CheckOutUser.Name = "tb_CheckOutUser";
+            this.tb_CheckOutUser.Size = new System.Drawing.Size(188, 20);
+            this.tb_CheckOutUser.TabIndex = 33;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 50);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.TabIndex = 32;
+            this.label4.Text = "Name:";
+            // 
+            // tb_epc_checkout
+            // 
+            this.tb_epc_checkout.Location = new System.Drawing.Point(49, 21);
+            this.tb_epc_checkout.Name = "tb_epc_checkout";
+            this.tb_epc_checkout.ReadOnly = true;
+            this.tb_epc_checkout.Size = new System.Drawing.Size(188, 20);
+            this.tb_epc_checkout.TabIndex = 31;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 13);
+            this.label5.TabIndex = 30;
+            this.label5.Text = "EPC:";
+            // 
+            // tb_user_CheckIn
+            // 
+            this.tb_user_CheckIn.Location = new System.Drawing.Point(73, 232);
+            this.tb_user_CheckIn.Name = "tb_user_CheckIn";
+            this.tb_user_CheckIn.Size = new System.Drawing.Size(188, 20);
+            this.tb_user_CheckIn.TabIndex = 43;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(33, 237);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Name:";
+            // 
+            // bn_ClearEntry
+            // 
+            this.bn_ClearEntry.Location = new System.Drawing.Point(172, 258);
+            this.bn_ClearEntry.Name = "bn_ClearEntry";
+            this.bn_ClearEntry.Size = new System.Drawing.Size(89, 23);
+            this.bn_ClearEntry.TabIndex = 47;
+            this.bn_ClearEntry.Text = "Clear";
+            this.bn_ClearEntry.UseVisualStyleBackColor = true;
+            this.bn_ClearEntry.Click += new System.EventHandler(this.bn_ClearEntry_Click);
+            // 
+            // bn_AddItem
+            // 
+            this.bn_AddItem.Location = new System.Drawing.Point(73, 258);
+            this.bn_AddItem.Name = "bn_AddItem";
+            this.bn_AddItem.Size = new System.Drawing.Size(89, 23);
+            this.bn_AddItem.TabIndex = 46;
+            this.bn_AddItem.Text = "Add Item!";
+            this.bn_AddItem.UseVisualStyleBackColor = true;
+            this.bn_AddItem.Click += new System.EventHandler(this.bn_AddItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 426);
+            this.ClientSize = new System.Drawing.Size(799, 426);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.comboBox2);
@@ -423,6 +521,8 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -456,9 +556,18 @@
         private System.Windows.Forms.Label lbl_name;
         private System.Windows.Forms.TextBox tb_sn;
         private System.Windows.Forms.Label lbl_sn;
-        private System.Windows.Forms.Button bn_AddItem;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox tb_CheckOutUser;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tb_epc_checkout;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button bn_CheckOut;
+        private System.Windows.Forms.TextBox tb_user_CheckIn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button bn_ClearEntry;
+        private System.Windows.Forms.Button bn_AddItem;
     }
 }
 
