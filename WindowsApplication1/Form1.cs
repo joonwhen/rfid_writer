@@ -9,6 +9,7 @@ using System.Threading;
 using RFID;
 using System.Runtime.InteropServices;
 using Npgsql;
+using System.IO;
 
 namespace WindowsApplication1
 {
@@ -49,6 +50,7 @@ namespace WindowsApplication1
                     //RFID.CFHidApi.CFHid_CloseDevice();
                     //return;
                 }
+                button6.Enabled = true;
             }
             else
             {
@@ -79,7 +81,7 @@ namespace WindowsApplication1
             RFID.CFHidApi.CFHid_CloseDevice();
             button1.Enabled = true;
             button2.Enabled = false;
-            button6.Enabled = true;
+            button6.Enabled = false; //jw
             button11.Enabled = false;
             this.SetText("Close\r\n");
         }
@@ -345,10 +347,78 @@ namespace WindowsApplication1
             }
         }
 
+        public bool epc_in_list;
+
         private void user_choice(string raw_epc)
         {
             string epc = raw_epc.Replace(" ", "");
             tb_epc.Text = epc;
+            tb_epc_checkout.Text = epc;
+            string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
+            NpgsqlConnection conn = new NpgsqlConnection(connstring);
+            conn.Open();
+            var command = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM RFID_Inventory WHERE epc = '"+epc+"');", conn);
+            epc_in_list = bool.Parse(command.ExecuteScalar().ToString());
+            conn.Close();
+        }
+
+        private void bn_CheckOut_Click(object sender, EventArgs e)
+        {
+            if(epc_in_list)
+            {
+                string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
+                NpgsqlConnection conn = new NpgsqlConnection(connstring);
+                conn.Open();
+                string epc = tb_epc.Text;
+                string user = tb_CheckOutUser.Text;
+                string time_now = DateTime.Now.ToString();
+                string item_status;
+                bool checkout = false;
+                //Check if item is already checked out
+                var command = new NpgsqlCommand("SELECT * FROM RFID_Inventory WHERE epc = '" + epc + "';", conn);
+                NpgsqlDataReader reader = command.ExecuteReader();
+                if(reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        item_status = reader["item_status_manual"].ToString();
+                        if (item_status == "Available")
+                        {
+                            checkout = true;
+                            command.Cancel();
+                        }
+                        else if (item_status == "Checked Out")
+                        {
+                            MessageBox.Show("Sorry, the item you wish to check out has already been checked out on the database. Check with your colleagues if they forgot to check in the item.");
+                            command.Cancel();
+                        }
+                    }
+                }
+                conn.Close();
+                
+                if(checkout)
+                {
+                    conn.Open();
+                    command = new NpgsqlCommand("UPDATE RFID_Inventory SET item_status_manual = 'Checked Out', personnel_checked_out = '" + user + "', time_check_out = '" + time_now + "' WHERE epc = '" + epc + "';", conn);
+                    bool success = Convert.ToBoolean(command.ExecuteNonQuery());
+                    conn.Close();
+                    if (success)
+                    {
+                        MessageBox.Show("Item has been checked out by " + user + " at " + time_now);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: Item has not been checked out.");
+                    }
+                    string logtext = "[OUT][" + time_now + "]" + " EPC: " + epc + " has been checked out by " + user + "." + Environment.NewLine;
+                    File.AppendAllText("InventoryLog.txt", logtext);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Unable to check item out as it does not exist on the database.");
+            }
         }
 
         private void bn_AddItem_Click(object sender, EventArgs e)
@@ -361,18 +431,38 @@ namespace WindowsApplication1
             string tagloc = tb_loc.Text;
             string tagdesc = tb_desc.Text;
             string item_sn = tb_sn.Text;
-            var command = new NpgsqlCommand("INSERT INTO RFID_Inventory VALUES(epc, tagname, tagloc, tagdesc, item_sn) VALUES ('"+epc+ "', '"+tagname+ "', '"+tagloc+ "', '"+tagdesc+ "', '"+item_sn+"');", conn) ;
-            command.ExecuteNonQuery();
-            bool success = command.ExecuteNonQuery() != -1;
-            if(success)
+            string time_now = DateTime.Now.ToString();
+            string user = tb_user_CheckIn.Text;
+
+            if (epc_in_list)
             {
-                Console.WriteLine("Added Item");
+                MessageBox.Show("Unable to add this entry into the database as the EPC already exists.");
             }
             else
             {
-                Console.WriteLine("Failed to run Query");
+                var command = new NpgsqlCommand("INSERT INTO RFID_Inventory (epc, tagname, tagloc, tagdesc, item_sn, personnel_checked_in, time_checked_in, item_status_manual) VALUES ('" + epc + "', '" + tagname + "', '" + tagloc + "', '" + tagdesc + "', '" + item_sn + "', '" + user + "', '" + time_now + "', 'Available');", conn);
+                int success = command.ExecuteNonQuery();
+                if (success == -1)
+                {
+                    MessageBox.Show("Error: Unable to add the entry to database!");
+                }
+                else
+                {
+                    MessageBox.Show("Successfully added to the database!");
+                    string logtext = "[IN][" + time_now + "]" + " EPC: " + epc + " has been checked in." + Environment.NewLine;
+                    File.AppendAllText("InventoryLog.txt", logtext);
+                }
             }
             conn.Close();
+        }
+
+        private void bn_ClearEntry_Click(object sender, EventArgs e)
+        {
+            tb_epc.Clear();
+            tb_name.Clear();
+            tb_loc.Clear();
+            tb_desc.Clear();
+            tb_sn.Clear();
         }
     }
 }
