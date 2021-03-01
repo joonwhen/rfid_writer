@@ -120,87 +120,6 @@ namespace WindowsApplication1
             button11.Enabled = true;
         }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            byte[] arrBuffer = new byte[64000];
-            ushort iNum = 0;
-            ushort iTotalLen = 0; 
-            this.SetText("AnswerMode\r\n");
-            if (RFID.CFHidApi.CFHid_InventoryG2(0xFF, arrBuffer, out iTotalLen, out iNum) == false)
-            {
-                this.SetText("Failed\r\n");
-                return;
-            }
-            int iTagLength = 0;
-            int iTagNumber = 0;
-            iTagLength = iTotalLen;
-            iTagNumber = iNum;
-            if (iTagNumber == 0) return;
-            int iIndex = 0;
-            int iLength = 0;
-            byte bPackLength = 0;
-            int iIDLen = 0;
-            int i = 0;
-
-            for (iIndex = 0; iIndex < iTagNumber; iIndex++)
-            {
-                bPackLength = arrBuffer[iLength];
-                string str2 = "";
-                string str1 = "";
-                str1 = arrBuffer[1 + iLength + 0].ToString("X2");
-                if ((arrBuffer[1 + iLength + 0] & 0x80) == 0x80)
-                {   // with TimeStamp , last 6 bytes is time
-                    iIDLen = bPackLength - 7;
-                }
-                else iIDLen = bPackLength - 1;
-
-                str2 = str2 + "Type:" + str1 + " ";  //Tag Type
-
-                str1 = arrBuffer[1 + iLength + 1].ToString("X2");
-                str2 = str2 + "Ant:" + str1 + " Tag:";  //Ant
-
-                string str3 = "";
-                for (i = 2; i < iIDLen; i++)
-                {
-                    str1 = arrBuffer[1 + iLength + i].ToString("X2");
-                    str3 = str3 + str1 + " ";
-                }
-                str2 = str2 + str3;
-                str1 = arrBuffer[1 + iLength + i].ToString("X2");
-                str2 = str2 + "RSSI:" + str1 + "\r\n";  //RSSI
-                iLength = iLength + bPackLength + 1;
-                this.SetText(str2);
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            byte[] Password = new byte[4];
-            Password[0] = 0; 
-            Password[1] = 0;
-            Password[2] = 0;
-            Password[3] = 0;
-            byte[] arrBuffer = new byte[12];
-            arrBuffer[0] = 0x00;
-            arrBuffer[1] = 0x11;
-            arrBuffer[2] = 0x22;
-            arrBuffer[3] = 0x33;
-            arrBuffer[4] = 0x44;
-            arrBuffer[5] = 0x55;
-            arrBuffer[6] = 0x66;
-            arrBuffer[7] = 0x77;
-            arrBuffer[8] = 0x88;
-            arrBuffer[9] = 0x99;
-            arrBuffer[10] = 0xAA;
-            arrBuffer[11] = 0xBB;
-            if (RFID.CFHidApi.CFHid_WriteCardG2(0xFF, Password, 1, 2, 6, arrBuffer) == false)
-            {
-                this.SetText("Faild");
-                return;
-            }
-            this.SetText("Success");
-        }
-
         private void button30_Click(object sender, EventArgs e)
         {
             string strSN = "";
@@ -218,79 +137,7 @@ namespace WindowsApplication1
             if (iHidNumber > 0)
                 comboBox1.SelectedIndex = 0;
         }
-
-        private void button4_Click(object sender, EventArgs e)
-        {  //ReadRFPower
-            byte bParamAddr = 0;
-            byte[] bValue = new byte[2];
-
-            /*  01: Transport
-                02: WorkMode
-                03: DeviceAddr
-                04: FilterTime
-                05: RFPower
-                06: BeepEnable
-                07: UartBaudRate*/
-            bParamAddr = 0x05;
-
-            if (RFID.CFHidApi.CFHid_ReadDeviceOneParam(0xFF, bParamAddr, bValue) == false)
-            {
-                this.SetText("Faild");
-                return;
-            }
-            string str1 = "";
-            str1 = bValue[0].ToString("d2");
-            str1 = "RF:"+str1 + "\r\n";
-
-            comboBox2.SelectedIndex = bValue[0];
-            this.SetText(str1);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            byte bParamAddr = 0;
-            byte bValue = 0;
-
-            /*  01: Transport
-                02: WorkMode
-                03: DeviceAddr
-                04: FilterTime
-                05: RFPower
-                06: BeepEnable
-                07: UartBaudRate*/
-            bParamAddr = 0x05;
-            //bValue = 26;   //RF = 26
-
-            bValue = (byte)Convert.ToInt16(comboBox2.SelectedItem);
-
-            if (RFID.CFHidApi.CFHid_SetDeviceOneParam(0xFF, bParamAddr, bValue) == false)
-            {
-                this.SetText("Faild");
-                return;
-            }
-            this.SetText("Success");
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            if (RFID.CFHidApi.CFHid_RelayOn(0xFF) == false)
-            {
-                this.SetText("Faild");
-                return;
-            }
-            this.SetText("Success");
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            if (RFID.CFHidApi.CFHid_RelayOff(0xFF) == false)
-            {
-                this.SetText("Faild");
-                return;
-            }
-            this.SetText("Success");
-        }
-
+ 
         private void timer1_Tick(object sender, EventArgs e)
         {
             byte[] arrBuffer = new byte[64000];
@@ -458,7 +305,6 @@ namespace WindowsApplication1
 
         private void bn_ClearEntry_Click(object sender, EventArgs e)
         {
-            tb_epc.Clear();
             tb_name.Clear();
             tb_loc.Clear();
             tb_desc.Clear();
