@@ -1,13 +1,7 @@
-D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\ReadCardDemo.exe
-D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\ReadCardDemo.pdb
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\WindowsApplication1.csprojAssemblyReference.cache
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\WindowsApplication1.Form1.resources
-D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\ReadCardDemo.Properties.Resources.resources
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\WindowsApplication1.csproj.GenerateResource.cache
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\WindowsApplication1.csproj.CoreCompileInputs.cache
-D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\ReadCardDemo.exe
-D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\ReadCardDemo.pdb
-D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\ReadCardDemo.exe.config
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\Npgsql.dll
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\System.Buffers.dll
@@ -31,3 +25,9 @@ D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\System.Threading
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\System.ValueTuple.xml
 D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\WindowsApplication1.csproj.CopyComplete
+D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\RFID_Writer.exe.config
+D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\RFID_Writer.exe
+D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\bin\Debug\RFID_Writer.pdb
+D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\RFID_Writer.Properties.Resources.resources
+D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\RFID_Writer.exe
+D:\JW\Work\Repository\RFID_Writer\WindowsApplication1\obj\Debug\RFID_Writer.pdb

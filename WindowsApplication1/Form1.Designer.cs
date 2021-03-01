@@ -39,6 +39,10 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lbl_epc = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.bn_ClearEntry = new System.Windows.Forms.Button();
+            this.bn_AddItem = new System.Windows.Forms.Button();
+            this.tb_user_CheckIn = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tb_desc = new System.Windows.Forms.TextBox();
             this.lbl_desc = new System.Windows.Forms.Label();
             this.tb_loc = new System.Windows.Forms.TextBox();
@@ -48,23 +52,19 @@
             this.tb_sn = new System.Windows.Forms.TextBox();
             this.lbl_sn = new System.Windows.Forms.Label();
             this.tb_epc = new System.Windows.Forms.TextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.bn_CheckOut = new System.Windows.Forms.Button();
             this.tb_CheckOutUser = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tb_epc_checkout = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.tb_user_CheckIn = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.bn_ClearEntry = new System.Windows.Forms.Button();
-            this.bn_AddItem = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -207,10 +207,46 @@
             this.groupBox4.Controls.Add(this.lbl_epc);
             this.groupBox4.Location = new System.Drawing.Point(266, 7);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(270, 329);
+            this.groupBox4.Size = new System.Drawing.Size(270, 288);
             this.groupBox4.TabIndex = 31;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Add Items to Database";
+            // 
+            // bn_ClearEntry
+            // 
+            this.bn_ClearEntry.Location = new System.Drawing.Point(172, 258);
+            this.bn_ClearEntry.Name = "bn_ClearEntry";
+            this.bn_ClearEntry.Size = new System.Drawing.Size(89, 23);
+            this.bn_ClearEntry.TabIndex = 47;
+            this.bn_ClearEntry.Text = "Clear";
+            this.bn_ClearEntry.UseVisualStyleBackColor = true;
+            this.bn_ClearEntry.Click += new System.EventHandler(this.bn_ClearEntry_Click);
+            // 
+            // bn_AddItem
+            // 
+            this.bn_AddItem.Location = new System.Drawing.Point(73, 258);
+            this.bn_AddItem.Name = "bn_AddItem";
+            this.bn_AddItem.Size = new System.Drawing.Size(89, 23);
+            this.bn_AddItem.TabIndex = 46;
+            this.bn_AddItem.Text = "Add Item";
+            this.bn_AddItem.UseVisualStyleBackColor = true;
+            this.bn_AddItem.Click += new System.EventHandler(this.bn_AddItem_Click);
+            // 
+            // tb_user_CheckIn
+            // 
+            this.tb_user_CheckIn.Location = new System.Drawing.Point(73, 232);
+            this.tb_user_CheckIn.Name = "tb_user_CheckIn";
+            this.tb_user_CheckIn.Size = new System.Drawing.Size(188, 20);
+            this.tb_user_CheckIn.TabIndex = 43;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(33, 237);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Name:";
             // 
             // tb_desc
             // 
@@ -285,25 +321,6 @@
             this.tb_epc.Size = new System.Drawing.Size(188, 20);
             this.tb_epc.TabIndex = 31;
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.textBox1);
-            this.groupBox5.Location = new System.Drawing.Point(12, 342);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(524, 82);
-            this.groupBox5.TabIndex = 32;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Console:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 19);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(509, 57);
-            this.textBox1.TabIndex = 33;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.bn_CheckOut);
@@ -313,7 +330,7 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Location = new System.Drawing.Point(12, 220);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(248, 116);
+            this.groupBox2.Size = new System.Drawing.Size(248, 103);
             this.groupBox2.TabIndex = 43;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Checkout Item from Database";
@@ -361,49 +378,32 @@
             this.label5.TabIndex = 30;
             this.label5.Text = "EPC:";
             // 
-            // tb_user_CheckIn
+            // groupBox5
             // 
-            this.tb_user_CheckIn.Location = new System.Drawing.Point(73, 232);
-            this.tb_user_CheckIn.Name = "tb_user_CheckIn";
-            this.tb_user_CheckIn.Size = new System.Drawing.Size(188, 20);
-            this.tb_user_CheckIn.TabIndex = 43;
+            this.groupBox5.Controls.Add(this.textBox1);
+            this.groupBox5.Location = new System.Drawing.Point(12, 329);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(524, 94);
+            this.groupBox5.TabIndex = 45;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Console:";
             // 
-            // label1
+            // textBox1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 237);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "Name:";
-            // 
-            // bn_ClearEntry
-            // 
-            this.bn_ClearEntry.Location = new System.Drawing.Point(172, 258);
-            this.bn_ClearEntry.Name = "bn_ClearEntry";
-            this.bn_ClearEntry.Size = new System.Drawing.Size(89, 23);
-            this.bn_ClearEntry.TabIndex = 47;
-            this.bn_ClearEntry.Text = "Clear";
-            this.bn_ClearEntry.UseVisualStyleBackColor = true;
-            this.bn_ClearEntry.Click += new System.EventHandler(this.bn_ClearEntry_Click);
-            // 
-            // bn_AddItem
-            // 
-            this.bn_AddItem.Location = new System.Drawing.Point(73, 258);
-            this.bn_AddItem.Name = "bn_AddItem";
-            this.bn_AddItem.Size = new System.Drawing.Size(89, 23);
-            this.bn_AddItem.TabIndex = 46;
-            this.bn_AddItem.Text = "Add Item";
-            this.bn_AddItem.UseVisualStyleBackColor = true;
-            this.bn_AddItem.Click += new System.EventHandler(this.bn_AddItem_Click);
+            this.textBox1.Location = new System.Drawing.Point(6, 19);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(509, 69);
+            this.textBox1.TabIndex = 33;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(543, 432);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(543, 429);
             this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
@@ -414,10 +414,10 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -445,8 +445,6 @@
         private System.Windows.Forms.Label lbl_name;
         private System.Windows.Forms.TextBox tb_sn;
         private System.Windows.Forms.Label lbl_sn;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox tb_CheckOutUser;
         private System.Windows.Forms.Label label4;
@@ -457,6 +455,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button bn_ClearEntry;
         private System.Windows.Forms.Button bn_AddItem;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

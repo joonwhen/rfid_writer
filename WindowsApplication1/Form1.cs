@@ -206,7 +206,7 @@ namespace WindowsApplication1
             conn.Open();
             var command = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM RFID_Inventory WHERE epc = '"+epc+"');", conn);
             epc_in_list = bool.Parse(command.ExecuteScalar().ToString());
-            conn.Close();
+            conn.Close();    
         }
 
         private void bn_CheckOut_Click(object sender, EventArgs e)
@@ -231,11 +231,13 @@ namespace WindowsApplication1
                         item_status = reader["item_status_manual"].ToString();
                         if (item_status == "Available")
                         {
+                            
                             checkout = true;
                             command.Cancel();
                         }
                         else if (item_status == "Checked Out")
                         {
+                            
                             MessageBox.Show("Sorry, the item you wish to check out has already been checked out on the database. Check with your colleagues if they forgot to check in the item.");
                             command.Cancel();
                         }
