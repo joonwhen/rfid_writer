@@ -21,6 +21,11 @@ namespace WindowsApplication1
             button2.Enabled = false;
             button11.Enabled = false;
 
+            bn_AddItem.Enabled = false;
+            bn_ClearEntry.Enabled = false;
+            bn_return.Enabled = false;
+            bn_CheckOut.Enabled = false;
+
             string strSN = "";
             byte[] arrBuffer = new byte[512];
             int iHidNumber = 0;
@@ -91,6 +96,10 @@ namespace WindowsApplication1
             timer1.Enabled = false;
             button6.Enabled = true;
             button11.Enabled = false;
+            bn_AddItem.Enabled = false;
+            bn_ClearEntry.Enabled = false;
+            bn_return.Enabled = false;
+            bn_CheckOut.Enabled = false;
         }
 
         delegate void SetTextCallback(string text);
@@ -118,6 +127,11 @@ namespace WindowsApplication1
             timer1.Enabled = true;
             button6.Enabled = false;
             button11.Enabled = true;
+            bn_AddItem.Enabled = true;
+            bn_ClearEntry.Enabled = true;
+            bn_return.Enabled = true;
+            bn_CheckOut.Enabled = true;
+            connected_db = status_check();
         }
 
         private void button30_Click(object sender, EventArgs e)
@@ -194,115 +208,303 @@ namespace WindowsApplication1
             }
         }
 
-        public bool epc_in_list;
+        public static bool epc_in_list;
+        public volatile bool connected_db = false;
 
         private void user_choice(string raw_epc)
         {
             string epc = raw_epc.Replace(" ", "");
             tb_epc.Text = epc;
             tb_epc_checkout.Text = epc;
+            tb_return_epc.Text = epc;
             string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
             NpgsqlConnection conn = new NpgsqlConnection(connstring);
-            conn.Open();
-            var command = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM RFID_Inventory WHERE epc = '"+epc+"');", conn);
-            epc_in_list = bool.Parse(command.ExecuteScalar().ToString());
-            conn.Close();    
-        }
-
-        private void bn_CheckOut_Click(object sender, EventArgs e)
-        {
-            if(epc_in_list)
+            if(connected_db)
             {
-                string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
-                NpgsqlConnection conn = new NpgsqlConnection(connstring);
-                conn.Open();
-                string epc = tb_epc.Text;
-                string user = tb_CheckOutUser.Text;
-                string time_now = DateTime.Now.ToString();
-                string item_status;
-                bool checkout = false;
-                //Check if item is already checked out
-                var command = new NpgsqlCommand("SELECT * FROM RFID_Inventory WHERE epc = '" + epc + "';", conn);
-                NpgsqlDataReader reader = command.ExecuteReader();
-                if(reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        item_status = reader["item_status_manual"].ToString();
-                        if (item_status == "Available")
-                        {
-                            
-                            checkout = true;
-                            command.Cancel();
-                        }
-                        else if (item_status == "Checked Out")
-                        {
-                            
-                            MessageBox.Show("Sorry, the item you wish to check out has already been checked out on the database. Check with your colleagues if they forgot to check in the item.");
-                            command.Cancel();
-                        }
-                    }
-                }
-                conn.Close();
-                
-                if(checkout)
+                try
                 {
                     conn.Open();
-                    command = new NpgsqlCommand("UPDATE RFID_Inventory SET item_status_manual = 'Checked Out', personnel_checked_out = '" + user + "', time_check_out = '" + time_now + "' WHERE epc = '" + epc + "';", conn);
-                    bool success = Convert.ToBoolean(command.ExecuteNonQuery());
+                    var command = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM RFID_Inventory WHERE epc = '" + epc + "');", conn);
+                    epc_in_list = bool.Parse(command.ExecuteScalar().ToString());
                     conn.Close();
-                    if (success)
-                    {
-                        MessageBox.Show("Item has been checked out by " + user + " at " + time_now);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error: Item has not been checked out.");
-                    }
-                    string logtext = "[OUT][" + time_now + "]" + " EPC: " + epc + " has been checked out by " + user + "." + Environment.NewLine;
-                    File.AppendAllText("InventoryLog.txt", logtext);
                 }
-
+                catch(Exception em)
+                {
+                }
+                
             }
             else
             {
-                MessageBox.Show("Unable to check item out as it does not exist on the database.");
             }
         }
 
         private void bn_AddItem_Click(object sender, EventArgs e)
         {
-            string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
-            NpgsqlConnection conn = new NpgsqlConnection(connstring);
-            conn.Open();
-            string epc = tb_epc.Text;
-            string tagname = tb_name.Text;
-            string tagloc = tb_loc.Text;
-            string tagdesc = tb_desc.Text;
-            string item_sn = tb_sn.Text;
-            string time_now = DateTime.Now.ToString();
-            string user = tb_user_CheckIn.Text;
+            connected_db = status_check();
+            if (connected_db)
+            {
+                string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
+                string epc = tb_epc.Text;
+                string tagname = tb_name.Text;
+                string tagloc = tb_loc.Text;
+                string tagdesc = tb_desc.Text;
+                string item_sn = tb_sn.Text;
+                string time_now = DateTime.Now.ToString();
+                string user = tb_user_CheckIn.Text;
+                string item_condition = cb_condition.Text;
+                bool added_to_db = true;
+                NpgsqlConnection conn = new NpgsqlConnection(connstring);
+                conn.Open();
 
-            if (epc_in_list)
-            {
-                MessageBox.Show("Unable to add this entry into the database as the EPC already exists.");
-            }
-            else
-            {
-                var command = new NpgsqlCommand("INSERT INTO RFID_Inventory (epc, tagname, tagloc, tagdesc, item_sn, personnel_checked_in, time_checked_in, item_status_manual) VALUES ('" + epc + "', '" + tagname + "', '" + tagloc + "', '" + tagdesc + "', '" + item_sn + "', '" + user + "', '" + time_now + "', 'Available');", conn);
-                int success = command.ExecuteNonQuery();
-                if (success == -1)
+                foreach (Control control in gb_add_items.Controls)
                 {
-                    MessageBox.Show("Error: Unable to add the entry to database!");
+                    if (control is TextBox)
+                    {
+                        TextBox tb = control as TextBox;
+                        if (string.IsNullOrEmpty(tb.Text))
+                        {
+                            added_to_db = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (cb_condition.SelectedIndex > -1)
+                {
+                }
+
+                else
+                {
+                    added_to_db = false;
+                }
+
+                if (added_to_db)
+                {
+                    if (epc_in_list)
+                    {
+                        MessageBox.Show("Error: Unable to add this entry into the database as the EPC already exists.");
+                    }
+                    else
+                    {
+                        var command = new NpgsqlCommand("INSERT INTO rfid_inventory(epc, tagname, tagloc, tagdesc, item_sn, personnel_checked_in, time_checked_in, item_status_manual, item_condition) VALUES ('" + epc + "', '" + tagname + "', '" + tagloc + "', '" + tagdesc + "', '" + item_sn + "', '" + user + "', '" + time_now + "', 'Available', '" + item_condition + "');", conn);
+                        int success = command.ExecuteNonQuery();
+                        if (success == -1)
+                        {
+                            MessageBox.Show("Error: Unable to add the entry to database!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Successfully added to the database!");
+                            string logtext = "[" + time_now + "][IN]" + " EPC: " + epc + " has been added by " + user + ". Condition of item: " + item_condition + Environment.NewLine;
+                            File.AppendAllText("logs/InventoryLog.txt", logtext);
+                        }
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Successfully added to the database!");
-                    string logtext = "[IN][" + time_now + "]" + " EPC: " + epc + " has been checked in." + Environment.NewLine;
-                    File.AppendAllText("InventoryLog.txt", logtext);
+                    MessageBox.Show("Error: Failed to add to database. Missing information.");
+                }
+                conn.Close();
+            }
+            else
+            {
+                MessageBox.Show("Error: Not Connected to Database.");
+            }
+        }
+
+        private bool status_check()
+        {
+            string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
+            NpgsqlConnection conn = new NpgsqlConnection(connstring);
+            try
+            {
+                conn.Open();
+                conn.Close();
+                return true;
+            }
+            catch (Exception em)
+            {
+                return false;
+            }
+        }
+
+        private void bn_return_Click(object sender, EventArgs e)
+        {
+            connected_db = status_check();
+            if (connected_db)
+            {
+                string epc = tb_return_epc.Text;
+                string user = tb_return_user.Text;
+                string item_condition = cb_return_condition.Text;
+                string time_now = DateTime.Now.ToString();
+                string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
+                string item_status;
+                bool return_item = false;
+                NpgsqlConnection conn = new NpgsqlConnection(connstring);
+                if (epc_in_list)
+                {
+                    conn.Open();
+                    var command = new NpgsqlCommand("SELECT * FROM RFID_Inventory WHERE epc = '" + epc + "';", conn);
+                    NpgsqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            item_status = reader["item_status_manual"].ToString();
+                            if (item_status == "Available")
+                            {
+                                return_item = false;
+                                command.Cancel();
+                                MessageBox.Show("Item has already been returned.");
+                            }
+                            else if (item_status == "Checked Out")
+                            {
+                                return_item = true;
+                                command.Cancel();
+                            }
+                        }
+                    }
+                    conn.Close();
+
+                    if (return_item)
+                    {
+                        bool return_success = true;
+
+                        foreach (Control control in gb_return.Controls)
+                        {
+                            if (control is TextBox)
+                            {
+                                TextBox tb = control as TextBox;
+                                if (string.IsNullOrEmpty(tb.Text))
+                                {
+                                    return_success = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (return_success)
+                        {
+                            conn.Open();
+                            command = new NpgsqlCommand("UPDATE rfid_inventory SET personnel_checked_in = '" + user + "', item_condition = '" + item_condition + "', time_checked_in = '" + time_now + "', item_status_manual = 'Available' WHERE epc = '" + epc + "';", conn);
+                            bool success = Convert.ToBoolean(command.ExecuteNonQuery());
+                            if (success)
+                            {
+                                MessageBox.Show("Item has been returned.");
+                                string logtext = "[" + time_now + "][IN]" + " EPC: " + epc + " has been returned by " + user + ". Condition of item: " + item_condition + Environment.NewLine;
+                                File.AppendAllText("logs/InventoryLog.txt", logtext);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error occurred returning item.");
+                            }
+                            conn.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: Failed to return item. Please provide the details.");
+                        }
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("EPC not in list.");
                 }
             }
-            conn.Close();
+            else
+            {
+                MessageBox.Show("Error: Not Connected to Database.");
+            }
+        }
+
+        private void bn_CheckOut_Click(object sender, EventArgs e)
+        {
+            connected_db = status_check();
+            if (connected_db)
+            {
+                if (epc_in_list)
+                {
+                    string connstring = String.Format("Host=localhost;Port=5432;User Id=Admin;Password=password;Database=Inventory;");
+                    NpgsqlConnection conn = new NpgsqlConnection(connstring); conn.Open();
+                    string epc = tb_epc.Text;
+                    string user = tb_CheckOutUser.Text;
+                    string time_now = DateTime.Now.ToString();
+                    string item_desc = tb_CheckOut_Desc.Text;
+                    string item_status;
+                    bool checkout = false;
+                    //Check if item is already checked out
+                    var command = new NpgsqlCommand("SELECT * FROM RFID_Inventory WHERE epc = '" + epc + "';", conn);
+                    NpgsqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            item_status = reader["item_status_manual"].ToString();
+                            if (item_status == "Available")
+                            {
+                                checkout = true;
+                                command.Cancel();
+                            }
+                            else if (item_status == "Checked Out")
+                            {
+                                MessageBox.Show("Sorry, the item you wish to check out has already been checked out.");
+                                command.Cancel();
+                            }
+                        }
+                    }
+                    conn.Close();
+
+                    if (checkout)
+                    {
+                        bool checkout_success = true;
+
+                        foreach (Control control in gb_checkout.Controls)
+                        {
+                            if (control is TextBox)
+                            {
+                                TextBox tb = control as TextBox;
+                                if (string.IsNullOrEmpty(tb.Text))
+                                {
+                                    checkout_success = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (checkout_success)
+                        {
+                            conn.Open();
+                            command = new NpgsqlCommand("UPDATE RFID_Inventory SET item_status_manual = 'Checked Out', personnel_checked_out = '" + user + "', time_check_out = '" + time_now + "', tagdesc = '" + item_desc + "' WHERE epc = '" + epc + "';", conn);
+                            bool success = Convert.ToBoolean(command.ExecuteNonQuery());
+                            conn.Close();
+                            if (success)
+                            {
+                                MessageBox.Show("Item has been checked out by " + user + " at " + time_now);
+                                string logtext = "[" + time_now + "][OUT]" + " EPC: " + epc + " has been checked out by " + user + ". Remarks: " + item_desc + Environment.NewLine;
+                                File.AppendAllText("logs/InventoryLog.txt", logtext);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error: Item has not been checked out.");
+                            }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: Failed to check out. Please provide your details.");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Unable to check item out as it does not exist on the database.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error: Not Connected to Database.");
+            }
         }
 
         private void bn_ClearEntry_Click(object sender, EventArgs e)
@@ -311,6 +513,8 @@ namespace WindowsApplication1
             tb_loc.Clear();
             tb_desc.Clear();
             tb_sn.Clear();
+            tb_user_CheckIn.Clear();
         }
+
     }
 }
