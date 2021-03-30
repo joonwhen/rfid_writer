@@ -204,7 +204,7 @@ namespace WindowsApplication1
                 str1 = arrBuffer[1 + iLength + i].ToString("X2");
                 str2 = str2 + "RSSI:" + str1 + "\r\n";  //RSSI
                 iLength = iLength + bPackLength + 1;
-                this.SetText(str2);
+                //this.SetText(str2);
             }
         }
 
@@ -224,7 +224,7 @@ namespace WindowsApplication1
                 try
                 {
                     conn.Open();
-                    var command = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM RFID_Inventory WHERE epc = '" + epc + "');", conn);
+                    var command = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM item_inventory WHERE epc = '" + epc + "');", conn);
                     epc_in_list = bool.Parse(command.ExecuteScalar().ToString());
                     conn.Close();
                 }
@@ -280,13 +280,18 @@ namespace WindowsApplication1
 
                 if (added_to_db)
                 {
+
                     if (epc_in_list)
                     {
                         MessageBox.Show("Error: Unable to add this entry into the database as the EPC already exists.");
                     }
                     else
                     {
-                        var command = new NpgsqlCommand("INSERT INTO rfid_inventory(epc, tagname, tagloc, tagdesc, item_sn, personnel_checked_in, time_checked_in, item_status_manual, item_condition) VALUES ('" + epc + "', '" + tagname + "', '" + tagloc + "', '" + tagdesc + "', '" + item_sn + "', '" + user + "', '" + time_now + "', 'Available', '" + item_condition + "');", conn);
+                        var command = new NpgsqlCommand("BEGIN; " +
+                            "INSERT INTO item_status(epc, automated_status, manual_status, last_read_time, error_status) VALUES('"+epc+"', 'Available', 'Available', '"+ time_now + "', ' '); " +
+                            "INSERT INTO item_inventory(epc, item_name, item_location, item_serial_number, item_condition, item_description) VALUES('" + epc + "', '" + tagname + "', '" + tagloc + "', '" + item_sn + "', '" + item_condition + "', '" + tagdesc + "'); " +
+                            "INSERT INTO item_movement(epc, personnel_checked_in, time_in)  VALUES('" + epc + "', '" + user + "', '" + time_now + "');" +
+                            "COMMIT; ", conn);
                         int success = command.ExecuteNonQuery();
                         if (success == -1)
                         {
@@ -344,13 +349,13 @@ namespace WindowsApplication1
                 if (epc_in_list)
                 {
                     conn.Open();
-                    var command = new NpgsqlCommand("SELECT * FROM RFID_Inventory WHERE epc = '" + epc + "';", conn);
+                    var command = new NpgsqlCommand("SELECT * FROM item_status WHERE epc = '" + epc + "';", conn);
                     NpgsqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
-                            item_status = reader["item_status_manual"].ToString();
+                            item_status = reader["manual_status"].ToString();
                             if (item_status == "Available")
                             {
                                 return_item = false;
@@ -386,7 +391,10 @@ namespace WindowsApplication1
                         if (return_success)
                         {
                             conn.Open();
-                            command = new NpgsqlCommand("UPDATE rfid_inventory SET personnel_checked_in = '" + user + "', item_condition = '" + item_condition + "', time_checked_in = '" + time_now + "', item_status_manual = 'Available' WHERE epc = '" + epc + "';", conn);
+                            command = new NpgsqlCommand("BEGIN; " +
+                            "UPDATE item_status SET manual_status = 'Available' where epc = '" + epc + "'; " +
+                            "UPDATE item_movement SET personnel_checked_in = '" + user + "', time_in = '" + time_now + "' where epc = '" + epc + "' ;" +
+                            "COMMIT; ", conn) ;
                             bool success = Convert.ToBoolean(command.ExecuteNonQuery());
                             if (success)
                             {
@@ -434,13 +442,13 @@ namespace WindowsApplication1
                     string item_status;
                     bool checkout = false;
                     //Check if item is already checked out
-                    var command = new NpgsqlCommand("SELECT * FROM RFID_Inventory WHERE epc = '" + epc + "';", conn);
+                    var command = new NpgsqlCommand("SELECT * FROM item_status WHERE epc = '" + epc + "';", conn);
                     NpgsqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
-                            item_status = reader["item_status_manual"].ToString();
+                            item_status = reader["manual_status"].ToString();
                             if (item_status == "Available")
                             {
                                 checkout = true;
@@ -453,6 +461,7 @@ namespace WindowsApplication1
                             }
                         }
                     }
+                    reader.Close();
                     conn.Close();
 
                     if (checkout)
@@ -475,7 +484,10 @@ namespace WindowsApplication1
                         if (checkout_success)
                         {
                             conn.Open();
-                            command = new NpgsqlCommand("UPDATE RFID_Inventory SET item_status_manual = 'Checked Out', personnel_checked_out = '" + user + "', time_check_out = '" + time_now + "', tagdesc = '" + item_desc + "' WHERE epc = '" + epc + "';", conn);
+                            command = new NpgsqlCommand("BEGIN; " +
+                            "UPDATE item_status SET manual_status = 'Checked Out', last_read_time = '" + time_now + "' where epc = '" + epc + "'; " +
+                            "UPDATE item_movement SET personnel_checked_out = '" + user + "', time_out = '" + time_now + "' where epc = '" + epc + "' ;" +
+                            "COMMIT; ", conn); 
                             bool success = Convert.ToBoolean(command.ExecuteNonQuery());
                             conn.Close();
                             if (success)
